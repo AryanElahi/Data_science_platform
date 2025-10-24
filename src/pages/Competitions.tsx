@@ -6,57 +6,57 @@ import { Search } from "lucide-react";
 const Competitions = () => {
   const competitions = [
     {
-      title: "House Price Prediction Challenge",
-      description: "Predict house prices using machine learning algorithms with comprehensive real estate data.",
-      prize: "$50,000",
+      title: "چالش پیش‌بینی قیمت خانه",
+      description: "پیش‌بینی قیمت خانه با استفاده از الگوریتم‌های یادگیری ماشین و داده‌های جامع املاک.",
+      prize: "۵۰,۰۰۰ دلار",
       participants: 2450,
       daysLeft: 45,
-      tags: ["Regression", "Real Estate", "ML"],
+      tags: ["رگرسیون", "املاک", "یادگیری ماشین"],
       difficulty: "Beginner" as const,
     },
     {
-      title: "Image Classification Competition",
-      description: "Build a model to classify images into multiple categories using deep learning techniques.",
-      prize: "$100,000",
+      title: "مسابقه طبقه‌بندی تصویر",
+      description: "ساخت مدلی برای طبقه‌بندی تصاویر در دسته‌های مختلف با استفاده از تکنیک‌های یادگیری عمیق.",
+      prize: "۱۰۰,۰۰۰ دلار",
       participants: 5280,
       daysLeft: 30,
-      tags: ["Computer Vision", "CNN", "Deep Learning"],
+      tags: ["بینایی ماشین", "CNN", "یادگیری عمیق"],
       difficulty: "Intermediate" as const,
     },
     {
-      title: "NLP Sentiment Analysis",
-      description: "Analyze sentiment from customer reviews using natural language processing.",
-      prize: "$75,000",
+      title: "تحلیل احساسات NLP",
+      description: "تحلیل احساسات از نظرات مشتریان با استفاده از پردازش زبان طبیعی.",
+      prize: "۷۵,۰۰۰ دلار",
       participants: 3120,
       daysLeft: 60,
-      tags: ["NLP", "Text Analysis", "BERT"],
+      tags: ["پردازش زبان طبیعی", "تحلیل متن", "BERT"],
       difficulty: "Advanced" as const,
     },
     {
-      title: "Time Series Forecasting",
-      description: "Forecast future values based on historical time series data patterns.",
-      prize: "$60,000",
+      title: "پیش‌بینی سری زمانی",
+      description: "پیش‌بینی مقادیر آینده بر اساس الگوهای داده‌های سری زمانی تاریخی.",
+      prize: "۶۰,۰۰۰ دلار",
       participants: 1890,
       daysLeft: 25,
-      tags: ["Time Series", "LSTM", "Forecasting"],
+      tags: ["سری زمانی", "LSTM", "پیش‌بینی"],
       difficulty: "Intermediate" as const,
     },
     {
-      title: "Object Detection Challenge",
-      description: "Detect and localize multiple objects in images with bounding boxes.",
-      prize: "$120,000",
+      title: "چالش تشخیص اشیاء",
+      description: "تشخیص و مکان‌یابی اشیاء متعدد در تصاویر با کادرهای محدودکننده.",
+      prize: "۱۲۰,۰۰۰ دلار",
       participants: 4500,
       daysLeft: 40,
-      tags: ["YOLO", "Object Detection", "Computer Vision"],
+      tags: ["YOLO", "تشخیص اشیاء", "بینایی ماشین"],
       difficulty: "Advanced" as const,
     },
     {
-      title: "Customer Churn Prediction",
-      description: "Predict which customers are likely to leave using classification models.",
-      prize: "$45,000",
+      title: "پیش‌بینی ریزش مشتری",
+      description: "پیش‌بینی اینکه کدام مشتریان احتمالاً با استفاده از مدل‌های طبقه‌بندی ترک می‌کنند.",
+      prize: "۴۵,۰۰۰ دلار",
       participants: 2100,
       daysLeft: 50,
-      tags: ["Classification", "Business", "Analytics"],
+      tags: ["طبقه‌بندی", "کسب‌وکار", "تحلیل داده"],
       difficulty: "Beginner" as const,
     },
   ];
@@ -67,15 +67,15 @@ const Competitions = () => {
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">All Competitions</h1>
+          <h1 className="text-4xl font-bold mb-4">همه مسابقات</h1>
           <p className="text-muted-foreground mb-6">
-            Discover and participate in data science competitions from around the world
+            مسابقات علم داده را از سراسر جهان کشف کنید و در آنها شرکت کنید
           </p>
           
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input 
-              placeholder="Search competitions..." 
+              placeholder="جستجوی مسابقات..." 
               className="pl-10"
             />
           </div>

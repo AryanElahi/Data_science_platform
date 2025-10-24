@@ -43,28 +43,28 @@ const Leaderboard = () => {
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Competition Leaderboard</h1>
+          <h1 className="text-4xl font-bold mb-4">جدول امتیازات مسابقه</h1>
           <p className="text-muted-foreground">
-            Top performers in the House Price Prediction Challenge
+            برترین رقبا در چالش پیش‌بینی قیمت خانه
           </p>
         </div>
         
         <Card>
           <CardHeader>
-            <CardTitle>Current Rankings</CardTitle>
+            <CardTitle>رتبه‌بندی فعلی</CardTitle>
             <CardDescription>
-              Updated in real-time • Showing top 10 competitors
+              به‌روزرسانی لحظه‌ای • نمایش ۱۰ رقیب برتر
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-16">Rank</TableHead>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Score</TableHead>
-                  <TableHead>Submissions</TableHead>
-                  <TableHead>Tier</TableHead>
+                  <TableHead className="w-16">رتبه</TableHead>
+                  <TableHead>نام کاربری</TableHead>
+                  <TableHead>امتیاز</TableHead>
+                  <TableHead>ارسال‌ها</TableHead>
+                  <TableHead>رده</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

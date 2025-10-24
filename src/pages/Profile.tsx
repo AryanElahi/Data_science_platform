@@ -29,9 +29,9 @@ const Profile = () => {
     }
   };
   const userStats = {
-    name: "Alex DataScience",
+    name: "الکس علم داده",
     username: "alex_ds_2024",
-    tier: "Expert",
+    tier: "متخصص",
     rank: 156,
     totalCompetitions: 23,
     medalsGold: 3,
@@ -39,13 +39,13 @@ const Profile = () => {
     medalsBronze: 7,
     totalSubmissions: 189,
     bestScore: 0.9654,
-    joinDate: "Jan 2023",
+    joinDate: "ژانویه ۲۰۲۳",
   };
 
   const recentCompetitions = [
-    { name: "House Price Prediction", rank: 12, medal: "Gold", score: 0.9654 },
-    { name: "Image Classification", rank: 45, medal: "Silver", score: 0.9123 },
-    { name: "NLP Sentiment Analysis", rank: 89, medal: "Bronze", score: 0.8876 },
+    { name: "پیش‌بینی قیمت خانه", rank: 12, medal: "طلا", score: 0.9654 },
+    { name: "طبقه‌بندی تصویر", rank: 45, medal: "نقره", score: 0.9123 },
+    { name: "تحلیل احساسات NLP", rank: 89, medal: "برنز", score: 0.8876 },
   ];
 
   return (
@@ -88,19 +88,19 @@ const Profile = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Global Rank</span>
+                <span className="text-muted-foreground">رتبه جهانی</span>
                 <span className="font-bold text-accent">#{userStats.rank}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Best Score</span>
+                <span className="text-muted-foreground">بهترین امتیاز</span>
                 <span className="font-mono font-bold">{userStats.bestScore}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Joined</span>
+                <span className="text-muted-foreground">تاریخ عضویت</span>
                 <span className="font-medium">{userStats.joinDate}</span>
               </div>
               <Button className="w-full" variant="hero">
-                Edit Profile
+                ویرایش پروفایل
               </Button>
             </CardContent>
           </Card>
@@ -110,30 +110,30 @@ const Profile = () => {
             {/* Statistics */}
             <Card>
               <CardHeader>
-                <CardTitle>Statistics</CardTitle>
-                <CardDescription>Your performance overview</CardDescription>
+                <CardTitle>آمار</CardTitle>
+                <CardDescription>نمای کلی عملکرد شما</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
                     <Trophy className="w-6 h-6 mx-auto mb-2 text-accent" />
                     <div className="text-2xl font-bold">{userStats.totalCompetitions}</div>
-                    <div className="text-sm text-muted-foreground">Competitions</div>
+                    <div className="text-sm text-muted-foreground">مسابقات</div>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
                     <TrendingUp className="w-6 h-6 mx-auto mb-2 text-accent" />
                     <div className="text-2xl font-bold">{userStats.totalSubmissions}</div>
-                    <div className="text-sm text-muted-foreground">Submissions</div>
+                    <div className="text-sm text-muted-foreground">ارسال‌ها</div>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
                     <Star className="w-6 h-6 mx-auto mb-2 text-yellow-500" />
                     <div className="text-2xl font-bold">{userStats.medalsGold}</div>
-                    <div className="text-sm text-muted-foreground">Gold Medals</div>
+                    <div className="text-sm text-muted-foreground">مدال‌های طلا</div>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
                     <Award className="w-6 h-6 mx-auto mb-2 text-gray-400" />
                     <div className="text-2xl font-bold">{userStats.medalsSilver}</div>
-                    <div className="text-sm text-muted-foreground">Silver Medals</div>
+                    <div className="text-sm text-muted-foreground">مدال‌های نقره</div>
                   </div>
                 </div>
               </CardContent>
@@ -142,8 +142,8 @@ const Profile = () => {
             {/* Recent Competitions */}
             <Card>
               <CardHeader>
-                <CardTitle>Recent Competitions</CardTitle>
-                <CardDescription>Your latest achievements</CardDescription>
+                <CardTitle>مسابقات اخیر</CardTitle>
+                <CardDescription>آخرین دستاوردهای شما</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -157,15 +157,15 @@ const Profile = () => {
                         <div>
                           <div className="font-medium">{comp.name}</div>
                           <div className="text-sm text-muted-foreground">
-                            Rank #{comp.rank} • Score: {comp.score}
+                            رتبه #{comp.rank} • امتیاز: {comp.score}
                           </div>
                         </div>
                       </div>
                       <Badge 
                         className={
-                          comp.medal === "Gold" 
+                          comp.medal === "طلا" 
                             ? "bg-yellow-500 text-white" 
-                            : comp.medal === "Silver"
+                            : comp.medal === "نقره"
                             ? "bg-gray-400 text-white"
                             : "bg-orange-600 text-white"
                         }

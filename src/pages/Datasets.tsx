@@ -6,63 +6,63 @@ import { Search } from "lucide-react";
 const Datasets = () => {
   const datasets = [
     {
-      title: "Global Temperature Data",
-      description: "Historical temperature records from weather stations worldwide (1900-2023)",
+      title: "داده‌های دمای جهانی",
+      description: "سوابق تاریخی دما از ایستگاه‌های هواشناسی در سراسر جهان (۱۹۰۰-۲۰۲۳)",
       size: "1.2 GB",
       downloads: 15420,
       views: 48230,
       likes: 2340,
-      tags: ["Climate", "Time Series", "Weather"],
+      tags: ["آب‌وهوا", "سری زمانی", "هواشناسی"],
       fileType: "CSV",
     },
     {
-      title: "E-commerce Customer Reviews",
-      description: "Product reviews with ratings and sentiment labels from major online retailers",
+      title: "نظرات مشتریان تجارت الکترونیک",
+      description: "نظرات محصولات با رتبه‌بندی و برچسب‌های احساسی از خرده‌فروشان آنلاین بزرگ",
       size: "850 MB",
       downloads: 28900,
       views: 72100,
       likes: 4120,
-      tags: ["NLP", "Sentiment", "Text"],
+      tags: ["پردازش زبان طبیعی", "احساسات", "متن"],
       fileType: "JSON",
     },
     {
-      title: "Medical Imaging Dataset",
-      description: "Annotated X-ray and MRI images for disease classification research",
+      title: "مجموعه داده تصاویر پزشکی",
+      description: "تصاویر اشعه ایکس و MRI با حاشیه‌نویسی برای تحقیقات طبقه‌بندی بیماری",
       size: "5.4 GB",
       downloads: 9200,
       views: 34500,
       likes: 1890,
-      tags: ["Healthcare", "Images", "Classification"],
+      tags: ["بهداشت و درمان", "تصاویر", "طبقه‌بندی"],
       fileType: "DICOM",
     },
     {
-      title: "Stock Market Historical Data",
-      description: "Daily stock prices and trading volumes for S&P 500 companies (2000-2023)",
+      title: "داده‌های تاریخی بازار سهام",
+      description: "قیمت‌های روزانه سهام و حجم معاملات برای شرکت‌های S&P 500 (۲۰۰۰-۲۰۲۳)",
       size: "620 MB",
       downloads: 21300,
       views: 58900,
       likes: 3210,
-      tags: ["Finance", "Time Series", "Trading"],
+      tags: ["مالی", "سری زمانی", "معاملات"],
       fileType: "CSV",
     },
     {
-      title: "Social Media Analytics",
-      description: "User engagement metrics and content performance data from social platforms",
+      title: "تحلیل شبکه‌های اجتماعی",
+      description: "معیارهای تعامل کاربران و داده‌های عملکرد محتوا از پلتفرم‌های اجتماعی",
       size: "2.1 GB",
       downloads: 12800,
       views: 41200,
       likes: 1760,
-      tags: ["Social Media", "Analytics", "Marketing"],
+      tags: ["شبکه‌های اجتماعی", "تحلیل", "بازاریابی"],
       fileType: "Parquet",
     },
     {
-      title: "Vehicle Detection Images",
-      description: "Labeled images of various vehicle types for object detection training",
+      title: "تصاویر تشخیص وسایل نقلیه",
+      description: "تصاویر برچسب‌گذاری شده انواع وسایل نقلیه برای آموزش تشخیص اشیاء",
       size: "3.8 GB",
       downloads: 18700,
       views: 52300,
       likes: 2890,
-      tags: ["Computer Vision", "Detection", "Autonomous"],
+      tags: ["بینایی ماشین", "تشخیص", "خودران"],
       fileType: "JPEG",
     },
   ];
@@ -73,15 +73,15 @@ const Datasets = () => {
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Datasets</h1>
+          <h1 className="text-4xl font-bold mb-4">مجموعه داده‌ها</h1>
           <p className="text-muted-foreground mb-6">
-            Explore thousands of datasets for your machine learning projects
+            هزاران مجموعه داده را برای پروژه‌های یادگیری ماشین خود کاوش کنید
           </p>
           
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input 
-              placeholder="Search datasets..." 
+              placeholder="جستجوی مجموعه داده‌ها..." 
               className="pl-10"
             />
           </div>

@@ -31,8 +31,8 @@ const UploadDataset = () => {
 
     if (!file || !title) {
       toast({
-        title: "Error",
-        description: "Please fill in all required fields",
+        title: "خطا",
+        description: "لطفاً تمام فیلدهای ضروری را پر کنید",
         variant: "destructive",
       });
       return;
@@ -45,8 +45,8 @@ const UploadDataset = () => {
       
       if (!user) {
         toast({
-          title: "Authentication required",
-          description: "Please sign in to upload datasets",
+          title: "نیاز به احراز هویت",
+          description: "لطفاً برای آپلود مجموعه داده وارد شوید",
           variant: "destructive",
         });
         return;
@@ -77,14 +77,14 @@ const UploadDataset = () => {
       if (dbError) throw dbError;
 
       toast({
-        title: "Success!",
-        description: "Dataset uploaded successfully",
+        title: "موفقیت!",
+        description: "مجموعه داده با موفقیت آپلود شد",
       });
 
       navigate("/datasets");
     } catch (error: any) {
       toast({
-        title: "Upload failed",
+        title: "آپلود ناموفق بود",
         description: error.message,
         variant: "destructive",
       });
@@ -102,58 +102,58 @@ const UploadDataset = () => {
           <CardHeader>
             <CardTitle className="text-3xl flex items-center gap-2">
               <Upload className="w-8 h-8 text-accent" />
-              Upload Dataset
+              آپلود مجموعه داده
             </CardTitle>
             <CardDescription>
-              Share your dataset with the community
+              مجموعه داده خود را با جامعه به اشتراک بگذارید
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="title">Title *</Label>
+                <Label htmlFor="title">عنوان *</Label>
                 <Input
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Dataset title"
+                  placeholder="عنوان مجموعه داده"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">توضیحات</Label>
                 <Textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Describe your dataset"
+                  placeholder="مجموعه داده خود را توضیح دهید"
                   rows={4}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category">دسته‌بندی</Label>
                 <Input
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  placeholder="e.g., Healthcare, Finance, Sports"
+                  placeholder="مثلاً: بهداشت و درمان، مالی، ورزش"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tags">Tags</Label>
+                <Label htmlFor="tags">برچسب‌ها</Label>
                 <Input
                   id="tags"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
-                  placeholder="machine learning, classification, image data (comma separated)"
+                  placeholder="یادگیری ماشین، طبقه‌بندی، داده تصویر (با کاما جدا شود)"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="file">Dataset File *</Label>
+                <Label htmlFor="file">فایل مجموعه داده *</Label>
                 <div className="flex items-center gap-4">
                   <Input
                     id="file"
@@ -177,7 +177,7 @@ const UploadDataset = () => {
                 disabled={uploading}
                 variant="hero"
               >
-                {uploading ? "Uploading..." : "Upload Dataset"}
+                {uploading ? "در حال آپلود..." : "آپلود مجموعه داده"}
               </Button>
             </form>
           </CardContent>
