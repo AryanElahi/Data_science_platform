@@ -9,6 +9,7 @@ import Datasets from "./pages/Datasets";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
 import UploadDataset from "./pages/UploadDataset";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/competitions" element={<Competitions />} />
           <Route path="/datasets" element={<Datasets />} />
           <Route path="/upload-dataset" element={<UploadDataset />} />

@@ -1,11 +1,41 @@
-import { Link, useLocation } from "react-router-dom";
-import { Database, Trophy, Users, BarChart3, Upload } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Database, Trophy, Users, BarChart3, Upload, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { useToast } from "@/hooks/use-toast";
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
   
   const isActive = (path: string) => location.pathname === path;
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "خروج موفق",
+      description: "شما از حساب خود خارج شدید.",
+    });
+    navigate("/");
+  };
   
   return (
     <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -16,7 +46,7 @@ const Navigation = () => {
               <BarChart3 className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              DataGar
+              DataCompete
             </span>
           </Link>
           
@@ -60,15 +90,26 @@ const Navigation = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link to="/profile">
-              <Button variant="ghost" size="sm">
-                <Users className="w-4 h-4 mr-2" />
-                پروفایل
-              </Button>
-            </Link>
-            <Button variant="hero" size="sm">
-              ورود
-            </Button>
+            {user ? (
+              <>
+                <Link to="/profile">
+                  <Button variant="ghost" size="sm">
+                    <Users className="w-4 h-4 mr-2" />
+                    پروفایل
+                  </Button>
+                </Link>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  خروج
+                </Button>
+              </>
+            ) : (
+              <Link to="/auth">
+                <Button variant="hero" size="sm">
+                  ورود / ثبت‌نام
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
