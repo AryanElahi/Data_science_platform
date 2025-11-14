@@ -3,34 +3,159 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, Award, Star, TrendingUp, Camera } from "lucide-react";
+import { Trophy, Award, Star, TrendingUp, Camera, Edit2, Save, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
-    const saved = localStorage.getItem('profileImage');
-    if (saved) setProfileImage(saved);
+    fetchProfile();
   }, []);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setProfileImage(result);
-        localStorage.setItem('profileImage', result);
-      };
-      reader.readAsDataURL(file);
+  const fetchProfile = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast({
+          title: "نیاز به احراز هویت",
+          description: "لطفاً برای مشاهده پروفایل وارد شوید",
+          variant: "destructive",
+        });
+        navigate("/auth");
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", session.user.id)
+        .single();
+
+      if (error) throw error;
+      
+      setProfile(data);
+      setDisplayName(data.display_name || "");
+    } catch (error: any) {
+      console.error("Error fetching profile:", error);
+      toast({
+        title: "خطا",
+        description: "بارگذاری پروفایل با مشکل مواجه شد",
+        variant: "destructive",
+      });
     }
   };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !profile) return;
+
+    setUploading(true);
+
+    try {
+      // Delete old avatar if exists
+      if (profile.avatar_url) {
+        const oldPath = profile.avatar_url.split('/').slice(-2).join('/');
+        await supabase.storage.from("avatars").remove([oldPath]);
+      }
+
+      // Upload new avatar
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${profile.id}/avatar.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      // Update profile
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({ avatar_url: publicUrl })
+        .eq("id", profile.id);
+
+      if (updateError) throw updateError;
+
+      toast({
+        title: "موفقیت",
+        description: "تصویر پروفایل به‌روزرسانی شد",
+      });
+
+      await fetchProfile();
+    } catch (error: any) {
+      toast({
+        title: "خطا",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    if (!profile) return;
+
+    setSaving(true);
+
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ display_name: displayName })
+        .eq("id", profile.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "موفقیت",
+        description: "پروفایل به‌روزرسانی شد",
+      });
+
+      setIsEditing(false);
+      await fetchProfile();
+    } catch (error: any) {
+      toast({
+        title: "خطا",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (!profile) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 text-center">
+          <p className="text-muted-foreground">در حال بارگذاری...</p>
+        </div>
+      </div>
+    );
+  }
+
   const userStats = {
-    name: "الکس علم داده",
-    username: "alex_ds_2024",
+    name: profile.display_name || "کاربر",
     tier: "متخصص",
     rank: 156,
     totalCompetitions: 23,
@@ -39,7 +164,7 @@ const Profile = () => {
     medalsBronze: 7,
     totalSubmissions: 189,
     bestScore: 0.9654,
-    joinDate: "ژانویه ۲۰۲۳",
+    joinDate: new Date(profile.created_at).toLocaleDateString("fa-IR"),
   };
 
   const recentCompetitions = [
@@ -60,14 +185,15 @@ const Profile = () => {
               <div className="flex justify-center mb-4">
                 <div className="relative group">
                   <Avatar className="w-24 h-24">
-                    {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
+                    {profile.avatar_url && <AvatarImage src={profile.avatar_url} alt="Profile" />}
                     <AvatarFallback className="text-2xl bg-gradient-to-br from-primary to-accent text-white">
-                      AD
+                      {profile.display_name?.charAt(0)?.toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    disabled={uploading}
+                    className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
                   >
                     <Camera className="w-6 h-6 text-white" />
                   </button>
@@ -77,11 +203,57 @@ const Profile = () => {
                     accept="image/*"
                     onChange={handleImageUpload}
                     className="hidden"
+                    disabled={uploading}
                   />
                 </div>
               </div>
-              <CardTitle className="text-2xl">{userStats.name}</CardTitle>
-              <CardDescription>@{userStats.username}</CardDescription>
+
+              {isEditing ? (
+                <div className="space-y-2">
+                  <Label htmlFor="displayName">نام نمایشی</Label>
+                  <Input
+                    id="displayName"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="نام نمایشی"
+                  />
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={handleSaveProfile}
+                      disabled={saving}
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      {saving ? "در حال ذخیره..." : "ذخیره"}
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => {
+                        setIsEditing(false);
+                        setDisplayName(profile.display_name || "");
+                      }}
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <CardTitle className="text-2xl">{userStats.name}</CardTitle>
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
+                    onClick={() => setIsEditing(true)}
+                    className="mt-2"
+                  >
+                    <Edit2 className="w-4 h-4 mr-2" />
+                    ویرایش نام
+                  </Button>
+                </>
+              )}
+              
               <Badge className="mt-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
                 {userStats.tier}
               </Badge>
@@ -99,9 +271,6 @@ const Profile = () => {
                 <span className="text-muted-foreground">تاریخ عضویت</span>
                 <span className="font-medium">{userStats.joinDate}</span>
               </div>
-              <Button className="w-full" variant="hero">
-                ویرایش پروفایل
-              </Button>
             </CardContent>
           </Card>
 

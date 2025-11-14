@@ -65,9 +65,11 @@ const Index = () => {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="text-lg bg-white/10 hover:bg-white/20 text-white border-white/30">
-                بیشتر بدانید
-              </Button>
+              <Link to="/profile">
+                <Button size="lg" variant="outline" className="text-lg bg-white/10 hover:bg-white/20 text-white border-white/30">
+                  پروفایل من
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
